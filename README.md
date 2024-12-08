@@ -254,9 +254,36 @@ WITH TemporalTable AS (
         TIMESTAMPDIFF(YEAR, january_first_year, current_date_value)
             AS years_diff
     FROM TemporalTable;
-
 ```
 
 ![p4_years](./p4_years.png)
 
 ---
+
+## Step 5.1
+
+**This step involves creating a user-defined function in MySQL, `YearsDifference`, which calculates the difference in years between the current date and the first day of the given year. The function takes a `YEAR` value as input, constructs a date for January 1st of that year, and then calculates the difference in years using the `TIMESTAMPDIFF` function.**
+
+```sql
+DROP FUNCTION IF EXISTS YearsDifference;
+DELIMITER //
+CREATE FUNCTION YearsDifference (yearValue YEAR)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE january_first_year DATE;
+    DECLARE current_date_value DATE;
+
+	SET january_first_year = STR_TO_DATE(CONCAT(yearValue, '-01-01'), '%Y-%m-%d');
+    SET current_date_value = CURDATE();
+
+	RETURN TIMESTAMPDIFF(YEAR, january_first_year, current_date_value);
+END //
+DELIMITER ;
+
+SELECT Year, YEAR(CURDATE()) AS current_year,
+       YearsDifference(Year) AS years_diff
+FROM diseases
+```
+
+![p5_function1](./p5_function1.png)
