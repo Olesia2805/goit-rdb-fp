@@ -4,7 +4,7 @@
 
 **1. Created a new database named "pandemic" to store the data for the project.**
 
-**2. Used the "pandemic" database as the default database for the project.**
+**2. The "pandemic" database was used as the default database for the project.**
 
 **3. Refreshed the list of databases used in the project to include the new "pandemic" database.**
 
@@ -24,11 +24,20 @@ SHOW DATABASES;
 
 ## Step 2.
 
-**1. **
+**1. The first SQL queries analyze and count the number of empty string values in various columns. This helps identify which attributes need normalization.**
 
-**2. **
+**2. The second set of queries updates columns to replace `''` (empty strings) with `NULL` for easier handling.**
 
-**3. **
+**3. This step creates a normalized table, `countries`, containing unique `Country_Name` and `Country_Code` pairs extracted from `infectious_cases`.**
+
+**4. This table establishes the relationship between a `Country_ID` and a specific year. The disease statistics are added as columns, with all values normalized to reference the primary key combination (`Country_ID`, `Year`).**
+
+**5. This step inserts data into the `diseases` table by joining `infectious_cases` with `countries` on `Country_Name`. This ensures each record is tied to a valid `Country_ID`.**
+
+***Key Points***
+- Replacing empty strings with `NULL` ensures proper handling in SQL operations.
+- `PRIMARY KEY (Country_ID, Year)` ensures no duplicate records for the same country and year. Since the combination of `Country_ID` and `Year` is sufficient to identify a row uniquely, there’s no need to introduce an artificial auto-increment ID for this table. This minimizes redundancy and simplifies the schema.
+
 
 ```sql
 SELECT 'Entity' AS case_type, COUNT(*) AS count
