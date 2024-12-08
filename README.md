@@ -48,7 +48,7 @@ FROM infectious_cases
 WHERE Year = '';
 ```
 
-![p1_import_data](./p1_import_data.png)
+![p2_check_empty](./p2_check_empty.png)
 
 ```sql
 SELECT 'Number_cholera_cases' AS case_type, COUNT(*) AS count
@@ -98,62 +98,53 @@ FROM infectious_cases
 WHERE Number_smallpox = '';
 ```
 
-![p1_import_data](./p1_import_data.png)
+![p2_check_empty_diseases](./p2_check_empty_diseases.png)
 
 ```sql
 SET SQL_SAFE_UPDATES = 0;
 
 UPDATE infectious_cases
-SET 
-    Number_yaws = NULL
+SET Number_yaws = NULL
 WHERE Number_yaws = '';
 
 UPDATE infectious_cases
-SET 
-    polio_cases = NULL
+SET polio_cases = NULL
 WHERE polio_cases = '';
 
 UPDATE infectious_cases
-SET 
-    cases_guinea_worm = NULL
+SET cases_guinea_worm = NULL
 WHERE cases_guinea_worm = '';
 
 UPDATE infectious_cases
-SET 
-    Number_rabies = NULL
+SET Number_rabies = NULL
 WHERE Number_rabies = '';
 
 UPDATE infectious_cases
-SET 
-    Number_malaria = NULL
+SET Number_malaria = NULL
 WHERE Number_malaria = '';
 
 UPDATE infectious_cases
-SET 
-    Number_hiv = NULL
+SET Number_hiv = NULL
 WHERE Number_hiv = '';
 
 UPDATE infectious_cases
-SET 
-    Number_tuberculosis = NULL
+SET Number_tuberculosis = NULL
 WHERE Number_tuberculosis = '';
 
 UPDATE infectious_cases
-SET 
-    Number_smallpox = NULL
+SET Number_smallpox = NULL
 WHERE Number_smallpox = '';
 
 UPDATE infectious_cases
-SET 
-    Number_cholera_cases = NULL
+SET Number_cholera_cases = NULL
 WHERE Number_cholera_cases = '';
 
 SET SQL_SAFE_UPDATES = 1;
 ```
 
-![p1_import_data](./p1_import_data.png)
+![p2_change__to_NULL](./p2_change__to_NULL.png)
 
-![p1_import_data](./p1_import_data.png)
+![p2_check_NULL_diseases](./p2_check_NULL_diseases.png)
 
 ```sql
 CREATE TABLE countries(
@@ -168,7 +159,7 @@ SELECT DISTINCT Entity, Code FROM infectious_cases;
 SELECT * FROM countries;
 ```
 
-![p1_import_data](./p1_import_data.png)
+![p2_create_countries](./p2_create_countries.png)
 
 ```sql
 CREATE TABLE diseases(Country_ID INT,
@@ -201,6 +192,8 @@ JOIN countries AS c ON ic.Entity = c.Country_Name;
 SELECT * FROM diseases;
 ```
 
-![p1_import_data](./p1_import_data.png)
+![p2_create_diseases](./p2_create_diseases.png)
+
+![p2_insert_diseases](./p2_insert_diseases.png)
 
 ---
