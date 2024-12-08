@@ -204,3 +204,30 @@ SELECT * FROM diseases;
 ![p2_insert_diseases](./p2_insert_table_diseases.png)
 
 ---
+
+## Step 3.
+
+**1. Calculated the average, minimum, maximum, and sum of the attribute `Number_rabies` for `Country_ID`s.**
+
+**2. Excluded any records where `Number_rabies` is empty (`''`).**
+
+**3. Then, sorted the results by the calculated average in descending order and limited the output to 10 rows.**
+
+```sql
+SELECT Country_ID,
+       AVG(diseases.Number_rabies) AS average,
+       MIN(diseases.Number_rabies) AS min,
+       MAX(diseases.Number_rabies)AS max,
+       SUM(diseases.Number_rabies) AS sum
+FROM diseases
+-- optional
+WHERE diseases.Number_rabies IS NOT NULL
+--
+GROUP BY Country_ID
+ORDER BY average DESC
+LIMIT 10;
+```
+
+![p3_analysis_data](./p3_analysis_data.png)
+
+---
