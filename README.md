@@ -231,3 +231,32 @@ LIMIT 10;
 ![p3_analysis_data](./p3_analysis_data.png)
 
 ---
+
+## Step 4.
+
+**1. Created a column that generates the first day of the year based on the `Year` column.**
+
+**2. Created a column that holds the current date.**
+
+**3. Created a column that calculates the difference in years between the two above-mentioned columns.**
+
+```sql
+WITH TemporalTable AS (
+     SELECT Year,
+            STR_TO_DATE(CONCAT(Year, '-01-01'), '%Y-%m-%d')
+                AS january_first_year,
+		    CURDATE() AS current_date_value
+     FROM diseases
+)
+    SELECT Year,
+        january_first_year,
+        current_date_value,
+        TIMESTAMPDIFF(YEAR, january_first_year, current_date_value)
+            AS years_diff
+    FROM TemporalTable;
+
+```
+
+![p4_years](./p4_years.png)
+
+---
