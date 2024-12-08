@@ -34,10 +34,10 @@ SHOW DATABASES;
 
 **5. This step inserts data into the `diseases` table by joining `infectious_cases` with `countries` on `Country_Name`. This ensures each record is tied to a valid `Country_ID`.**
 
-***Key Points***
-- Replacing empty strings with `NULL` ensures proper handling in SQL operations.
-- `PRIMARY KEY (Country_ID, Year)` ensures no duplicate records for the same country and year. Since the combination of `Country_ID` and `Year` is sufficient to identify a row uniquely, there’s no need to introduce an artificial auto-increment ID for this table. This minimizes redundancy and simplifies the schema.
+**_Key Points_**
 
+- Replacing empty strings with `NULL` ensures proper handling in SQL operations.
+- `PRIMARY KEY (Country_ID, Year)` ensures no duplicate records for the same country and year. Since the combination of `Country_ID` and `Year` is sufficient to identify a row uniquely, there's no need to introduce an artificial auto-increment ID for this table. This minimizes redundancy and simplifies the schema.
 
 ```sql
 SELECT 'Entity' AS case_type, COUNT(*) AS count
@@ -54,12 +54,10 @@ UNION ALL
 
 SELECT 'Year' AS case_type, COUNT(*) AS count
 FROM infectious_cases
-WHERE Year = '';
-```
+WHERE Year = ''
 
-![p2_check_empty](./p2_check_empty.png)
+UNION ALL
 
-```sql
 SELECT 'Number_cholera_cases' AS case_type, COUNT(*) AS count
 FROM infectious_cases
 WHERE Number_cholera_cases = ''
@@ -107,7 +105,7 @@ FROM infectious_cases
 WHERE Number_smallpox = '';
 ```
 
-![p2_check_empty_diseases](./p2_check_empty_diseases.png)
+![p2_count_empty_fields](./p2_count_empty_fields.png)
 
 ```sql
 SET SQL_SAFE_UPDATES = 0;
@@ -151,9 +149,9 @@ WHERE Number_cholera_cases = '';
 SET SQL_SAFE_UPDATES = 1;
 ```
 
-![p2_change__to_NULL](./p2_change__to_NULL.png)
+![p2_fill_NULL_fields](./p2_fill_NULL_fields.png)
 
-![p2_check_NULL_diseases](./p2_check_NULL_diseases.png)
+![p2_count_NULL_fields](./p2_count_NULL_fields.png)
 
 ```sql
 CREATE TABLE countries(
@@ -168,7 +166,7 @@ SELECT DISTINCT Entity, Code FROM infectious_cases;
 SELECT * FROM countries;
 ```
 
-![p2_create_countries](./p2_create_countries.png)
+![p2_create_insert_countries](./p2_create_insert_table_countries.png)
 
 ```sql
 CREATE TABLE diseases(Country_ID INT,
@@ -179,7 +177,7 @@ CREATE TABLE diseases(Country_ID INT,
                       Number_rabies FLOAT NULL,
                       Number_malaria FLOAT NULL,
                       Number_hiv FLOAT NULL,
-                      Number_tuberculosis FLOAT NULL, 
+                      Number_tuberculosis FLOAT NULL,
                       Number_smallpox FLOAT NULL,
                       Number_cholera_cases FLOAT NULL,
                       PRIMARY KEY (Country_ID, Year),
@@ -188,7 +186,7 @@ CREATE TABLE diseases(Country_ID INT,
 INSERT INTO diseases(Country_ID, Year, Number_yaws,
            Number_polio, Number_guinea_worm,
            Number_rabies, Number_malaria,
-           Number_hiv, Number_tuberculosis, 
+           Number_hiv, Number_tuberculosis,
            Number_smallpox, Number_cholera_cases)
 SELECT DISTINCT c.Country_ID, ic.Year, ic.Number_yaws,
                 ic.polio_cases, ic.cases_guinea_worm,
@@ -201,8 +199,8 @@ JOIN countries AS c ON ic.Entity = c.Country_Name;
 SELECT * FROM diseases;
 ```
 
-![p2_create_diseases](./p2_create_diseases.png)
+![p2_create_diseases](./p2_create_table_diseases.png)
 
-![p2_insert_diseases](./p2_insert_diseases.png)
+![p2_insert_diseases](./p2_insert_table_diseases.png)
 
 ---
