@@ -287,3 +287,47 @@ FROM diseases
 ```
 
 ![p5_function1](./p5_function1.png)
+
+---
+
+## Step 5.2
+
+**The SQL code you've provided is attempting to create a function called `DiseasesPerPeriod`, which calculates the average number of diseases over a specific period (month, quarter, etc.) based on the number of diseases in a year and the period divider.**
+
+```sql
+DROP FUNCTION IF EXISTS DiseasesPerPeriod;
+DELIMITER //
+CREATE FUNCTION DiseasesPerPeriod (diseasesNumber FLOAT, periodDivider INT)
+RETURNS FLOAT
+DETERMINISTIC
+BEGIN
+    IF diseasesNumber IS NULL THEN
+        RETURN 0;
+    ELSE
+        IF periodDivider > 12 OR periodDivider < 1 THEN
+			RETURN 0;
+        ELSE
+            RETURN ROUND(diseasesNumber / periodDivider, 2);
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+```
+
+```sql
+SELECT YEAR, Number_rabies,
+       DiseasesPerPeriod(Number_rabies, 2) AS semiannual,
+       DiseasesPerPeriod(Number_rabies, 3) AS quarterly,
+       DiseasesPerPeriod(Number_rabies, 12) AS monthly,
+       DiseasesPerPeriod(Number_rabies, 13) AS invalid_period,
+       YEAR, Number_tuberculosis,
+       DiseasesPerPeriod(Number_tuberculosis, 2) AS semiannual,
+       DiseasesPerPeriod(Number_tuberculosis, 3) AS quarterly,
+       DiseasesPerPeriod(Number_tuberculosis, 12) AS monthly,
+       DiseasesPerPeriod(Number_tuberculosis, 13) AS invalid_period
+FROM diseases
+```
+
+![p5_function2](./p5_function2.png)
+
+![p5_function2_results](./p5_function2_results.png)
